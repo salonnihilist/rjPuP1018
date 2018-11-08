@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -14,9 +15,15 @@ import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.blogspot.debukkitsblog.util.FileStorage;
 
 public class GUI extends JFrame implements WindowListener{
 
@@ -38,6 +45,10 @@ public class GUI extends JFrame implements WindowListener{
 	private ArrayList<JTextField> tFL_waffen;
 	private ArrayList<JSpinner> sL_waffen;
 	
+	private FileStorage db;
+	
+	private static String pName = "Spieler"; /////////////////////////////////////////
+	
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +59,7 @@ public class GUI extends JFrame implements WindowListener{
 					GUI frame = new GUI();
 					frame.setVisible(true);
 					
-					frame.setTitle("Dunkle Häresie - Charakterblatt"); //to do: +"-*Name*"
+					frame.setTitle("Dunkle Häresie - Charakterblatt - "+pName);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -72,6 +83,13 @@ public class GUI extends JFrame implements WindowListener{
 		tFL_waffen = new ArrayList<JTextField>();
 		sL_waffen = new ArrayList<JSpinner>();
 		
+		
+		try {
+			db = new FileStorage(new File("D://"+pName+".dat"));
+		} catch (IllegalArgumentException | IOException e) {
+			e.printStackTrace();
+		}
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 1000);
 		contentPane = new JPanel();
@@ -90,42 +108,102 @@ public class GUI extends JFrame implements WindowListener{
 		createPanel_waffen();
 		createMisc();
 		
-		loadFromDB();
+		try{
+			ArrayList<JTextField> tmp_tFL_character = (ArrayList<JTextField>) db.get("tFL_character");
+			for(int i=0; i<tFL_character.size(); i++) {
+				tFL_character.get(i).setText(tmp_tFL_character.get(i).getText());
+			}
+		}catch(Exception e){
+			saveToDB();
+		}finally{
+			loadFromDB();
+		}
+		
 	}
 	
-	public void saveToDB() { //@JULIAN!
+	public void saveToDB() { // @JULIAN: Inhalt der Methode durch entsprechendes Äquivalent ersetzen.
 		
-		/*
-		 *  Hier ist der entsprechende Code für das Speichern in die Datenbank einzufügen! (Es folgt ein Beispiel...)
-		 * 
-		db.store(tmp_tFL_character);
-		db.store(tmp_tFL_ausbau);
-		db.store(tmp_tFL_grund);
-		db.store(cBL_grund);
-		db.store(cBL_aubau);
-		db.store(sL_character);
-		db.store(tFL_talente);
-		db.store(tFL_ruestung);
-		db.store(tFL_waffen);
-		db.store(sL_waffen);
-		*/
+		try {
+			db = new FileStorage(new File("D://"+pName+".dat"));
+		} catch (IllegalArgumentException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			db.store("tFL_character", tFL_character);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("tFL_ausbau", tFL_ausbau);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("tFL_grund", tFL_grund);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("cBL_grund", cBL_grund);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("cBL_ausbau", cBL_ausbau);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("sL_character", sL_character);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("tFL_talente", tFL_talente);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("tFL_ruestung", tFL_ruestung);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("tFL_waffen", tFL_waffen);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.store("sL_waffen", sL_waffen);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public void loadFromDB() { //@JULIAN!
+	public void loadFromDB() { // @JULIAN: Inhalt der Methode durch entsprechendes Äquivalent ersetzen.
 		
-		/* 
-		 *  Hier ist der entsprechende Code für das Laden aus der Datenbank einzufügen! (Es folgt ein Beispiel...)
-		 * 
-		ArrayList<JTextField> tmp_tFL_character = db.get(tFL_character);
-		ArrayList<JTextField> tmp_tFL_ausbau = db.get(tFL_ausbau);
-		ArrayList<JTextField> tmp_tFL_grund = db.get(tFL_grund);
-		ArrayList<JCheckBox> tmp_cBL_grund = db.get(cBL_grund);
-		ArrayList<JCheckBox> tmp_cBL_ausbau = db.get(cBL_aubau);
-		ArrayList<JSpinner> tmp_sL_character = db.get(sL_character);
-		ArrayList<JTextField> tmp_tFL_talente = db.get(tFL_talente);
-		ArrayList<JTextField> tmp_tFL_ruestung = db.get(tFL_ruestung);
-		ArrayList<JTextField> tmp_tFL_waffen = db.get(tFL_waffen);
-		ArrayList<JSpinner> tmp_sL_waffen = db.get(sL_waffen);
+		
+		ArrayList<JTextField> tmp_tFL_character = (ArrayList<JTextField>) db.get("tFL_character");
+		ArrayList<JTextField> tmp_tFL_ausbau = (ArrayList<JTextField>) db.get("tFL_ausbau");
+		ArrayList<JTextField> tmp_tFL_grund = (ArrayList<JTextField>) db.get("tFL_grund");
+		ArrayList<JCheckBox> tmp_cBL_grund = (ArrayList<JCheckBox>) db.get("cBL_grund");
+		ArrayList<JCheckBox> tmp_cBL_ausbau = (ArrayList<JCheckBox>) db.get("cBL_ausbau");
+		ArrayList<JSpinner> tmp_sL_character = (ArrayList<JSpinner>) db.get("sL_character");
+		ArrayList<JTextField> tmp_tFL_talente = (ArrayList<JTextField>) db.get("tFL_talente");
+		ArrayList<JTextField> tmp_tFL_ruestung = (ArrayList<JTextField>) db.get("tFL_ruestung");
+		ArrayList<JTextField> tmp_tFL_waffen = (ArrayList<JTextField>) db.get("tFL_waffen");
+		ArrayList<JSpinner> tmp_sL_waffen = (ArrayList<JSpinner>) db.get("sL_waffen");
 		
 		for(int i=0; i<tFL_character.size(); i++) {
 			tFL_character.get(i).setText(tmp_tFL_character.get(i).getText());
@@ -157,7 +235,6 @@ public class GUI extends JFrame implements WindowListener{
 		for(int i=0; i<sL_waffen.size(); i++) {
 			sL_waffen.get(i).setValue(tmp_sL_waffen.get(i).getValue());
 		}
-		*/
 	}
 	
 	public void createMisc() {
@@ -672,7 +749,8 @@ public class GUI extends JFrame implements WindowListener{
 		panel_charakter.add(label_2, "cell 0 22");
 		//
 	}
-
+	
+	
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
