@@ -1,0 +1,722 @@
+package penandpaper;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.SwingConstants;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import java.awt.SystemColor;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.ArrayList;
+
+public class GUI extends JFrame implements WindowListener{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2419355147918966696L;
+
+	private JPanel contentPane;
+	
+	private ArrayList<JTextField> tFL_character;
+	private ArrayList<JTextField> tFL_ausbau;
+	private ArrayList<JTextField> tFL_grund;
+	private ArrayList<JCheckBox> cBL_grund;
+	private ArrayList<JCheckBox> cBL_ausbau;
+	private ArrayList<JSpinner> sL_character;
+	private ArrayList<JTextField> tFL_talente;
+	private ArrayList<JTextField> tFL_ruestung;
+	private ArrayList<JTextField> tFL_waffen;
+	private ArrayList<JSpinner> sL_waffen;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI frame = new GUI();
+					frame.setVisible(true);
+					
+					// if *name_is
+					
+					frame.setTitle("Dunkle Häresie - Charakterblatt"); // +"-*Name*"
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public GUI() {
+		
+		tFL_character = new ArrayList<JTextField>();
+		sL_character = new ArrayList<JSpinner>();
+		tFL_grund = new ArrayList<JTextField>();
+		cBL_grund = new ArrayList<JCheckBox>();
+		tFL_ausbau = new ArrayList<JTextField>();
+		cBL_ausbau = new ArrayList<JCheckBox>();
+		tFL_talente = new ArrayList<JTextField>();
+		tFL_ruestung = new ArrayList<JTextField>();
+		tFL_waffen = new ArrayList<JTextField>();
+		sL_waffen = new ArrayList<JSpinner>();
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1000, 1000);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new MigLayout("", "[grow][grow][grow]", "[][grow][][grow]"));
+		
+		addWindowListener(this);
+		
+		createPanel_charakter();
+		createPanel_grund();
+		createPanel_ausbau();
+		createPanel_talent();
+		createPanel_ruestung();
+		createPanel_waffen();
+		createMisc();
+		
+		loadFromDB();
+		
+		
+	}
+	
+	public void saveToDB() { //@JULIAN!
+		
+		/*
+		 *  Hier ist der entsprechende Code für das Speichern in die Datenbank einzufügen! (Es folgt ein Beispiel...)
+		 * 
+		db.store(tmp_tFL_character);
+		db.store(tmp_tFL_ausbau);
+		db.store(tmp_tFL_grund);
+		db.store(cBL_grund);
+		db.store(cBL_aubau);
+		db.store(sL_character);
+		db.store(tFL_talente);
+		db.store(tFL_ruestung);
+		db.store(tFL_waffen);
+		db.store(sL_waffen);
+		*/
+	}
+	
+	public void loadFromDB() { //@JULIAN!
+		
+		
+		/* 
+		 *  Hier ist der entsprechende Code für das Laden aus der Datenbank einzufügen! (Es folgt ein Beispiel...)
+		 * 
+		ArrayList<JTextField> tmp_tFL_character = db.get(tmp_tFL_character);
+		ArrayList<JTextField> tmp_tFL_ausbau = db.get(tmp_tFL_ausbau);
+		ArrayList<JTextField> tmp_tFL_grund = db.get(tmp_tFL_grund);
+		ArrayList<JCheckBox> tmp_cBL_grund = db.get(cBL_grund);
+		ArrayList<JCheckBox> tmp_cBL_ausbau = db.get(cBL_aubau);
+		ArrayList<JSpinner> tmp_sL_character = db.get(sL_character);
+		ArrayList<JTextField> tmp_tFL_talente = db.get(tFL_talente);
+		ArrayList<JTextField> tmp_tFL_ruestung = db.get(tFL_ruestung);
+		ArrayList<JTextField> tmp_tFL_waffen = db.get(tFL_waffen);
+		ArrayList<JSpinner> tmp_sL_waffen = db.get(sL_waffen);
+		*/
+	}
+	
+	public void createMisc() {
+		
+		JLabel lblCharakter = new JLabel("CHARAKTER");
+		lblCharakter.setForeground(Color.WHITE);
+		contentPane.add(lblCharakter, "cell 0 0,alignx center");
+		
+		JLabel lblAusbaufertigkeiten = new JLabel("AUSBAUFERTIGKEITEN");
+		lblAusbaufertigkeiten.setForeground(Color.WHITE);
+		contentPane.add(lblAusbaufertigkeiten, "cell 2 0,alignx center");
+		
+		JLabel lblTalenteEigenschaften = new JLabel("TALENTE & EIGENSCHAFTEN");
+		lblTalenteEigenschaften.setForeground(Color.WHITE);
+		contentPane.add(lblTalenteEigenschaften, "cell 0 2,alignx center");
+		
+		JLabel lblRuestung = new JLabel("R\u00DCSTUNG & AUSR\u00DCSTUNG");
+		lblRuestung.setForeground(Color.WHITE);
+		contentPane.add(lblRuestung, "cell 1 2,alignx center");
+		
+		JLabel lblWaffen = new JLabel("WAFFEN & PSI-KR\u00C4FTE");
+		lblWaffen.setForeground(Color.WHITE);
+		contentPane.add(lblWaffen, "cell 2 2,alignx center");
+
+		JLabel lblGrundfertigkeiten = new JLabel("GRUNDFERTIGKEITEN");
+		lblGrundfertigkeiten.setForeground(Color.WHITE);
+		contentPane.add(lblGrundfertigkeiten, "cell 1 0,alignx center");
+		
+	}
+	
+	public void createPanel_waffen() {
+		
+
+		JPanel panel_waffen = new JPanel();
+		contentPane.add(panel_waffen, "cell 2 3,grow");
+		panel_waffen.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][][]"));
+		
+		for(int i=0; i<11; i++) {
+			JTextField tmp = new JTextField();
+			tmp.setColumns(10);
+			if(i==0 || i==2 || i==4 || i==6) {
+				panel_waffen.add(tmp, "flowx,cell 1 "+i+",growx");
+				tFL_waffen.add(tmp);
+			}else {
+				panel_waffen.add(tmp, "cell 1 "+i+",growx");
+				tFL_waffen.add(tmp);
+			}
+		}
+		
+		JLabel lblName = new JLabel("Name:");
+		panel_waffen.add(lblName, "cell 0 0,alignx center");
+		JLabel lblGattung = new JLabel("Speziell:");
+		panel_waffen.add(lblGattung, "cell 0 1,alignx center");
+		JLabel label_3 = new JLabel("Name:");
+		panel_waffen.add(label_3, "cell 0 2,alignx center");
+		JLabel label_4 = new JLabel("Speziell:");
+		panel_waffen.add(label_4, "cell 0 3,alignx center");
+		JLabel label_5 = new JLabel("Mun/Mag:");
+		panel_waffen.add(label_5, "cell 1 2");
+		JLabel label_6 = new JLabel("Mun/Mag:");
+		panel_waffen.add(label_6, "cell 1 0");
+		JLabel label_7 = new JLabel("Name:");
+		panel_waffen.add(label_7, "cell 0 4,alignx center");
+		JLabel label_8 = new JLabel("Mun/Mag:");
+		panel_waffen.add(label_8, "cell 1 4");
+		JLabel label_9 = new JLabel("Speziell:");
+		panel_waffen.add(label_9, "cell 0 5,alignx center");
+		JLabel label_10 = new JLabel("Name:");
+		panel_waffen.add(label_10, "cell 0 6,alignx center");
+		JLabel label_11 = new JLabel("Mun/Mag:");
+		panel_waffen.add(label_11, "cell 1 6");
+		JLabel label_12 = new JLabel("Speziell:");
+		panel_waffen.add(label_12, "cell 0 7,alignx center");
+		JLabel lblPsidisziplin = new JLabel("Psi-Disziplin");
+		panel_waffen.add(lblPsidisziplin, "cell 0 8,alignx center");
+		JLabel lblGeringeKrfte = new JLabel("Geringe Kr\u00E4fte");
+		panel_waffen.add(lblGeringeKrfte, "cell 0 9,alignx center");
+		JLabel lblDisziplinkrfte = new JLabel("Disziplin-Kr\u00E4fte");
+		panel_waffen.add(lblDisziplinkrfte, "cell 0 10,alignx center");
+		
+		for(int i=0; i<7; i+=2) {
+			JSpinner tmp = new JSpinner();
+			tmp.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
+			panel_waffen.add(tmp, "cell 1 "+i);
+			sL_waffen.add(tmp);
+		}
+	}
+	
+	public void createPanel_ruestung() {
+		
+		JPanel panel_ruestung = new JPanel();
+		contentPane.add(panel_ruestung, "cell 1 3,grow");
+		panel_ruestung.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][][]"));
+		
+		for(int i=0; i<11; i++) {
+			JTextField tmp = new JTextField();
+			tmp.setColumns(10);
+			panel_ruestung.add(tmp, "cell 1 "+i+",growx");
+			tFL_ruestung.add(tmp);
+		}
+		
+		JLabel lblKopf = new JLabel("Kopf:");
+		panel_ruestung.add(lblKopf, "cell 0 0,alignx center");
+		JLabel lblKrper = new JLabel("K\u00F6rper:");
+		panel_ruestung.add(lblKrper, "cell 0 1,alignx center");
+		JLabel lblArml = new JLabel("Arm (L):");
+		panel_ruestung.add(lblArml, "cell 0 2,alignx center");
+		JLabel lblArmr = new JLabel("Arm (R):");
+		panel_ruestung.add(lblArmr, "cell 0 3,alignx center");
+		JLabel lblBeinl = new JLabel("Bein (L):");
+		panel_ruestung.add(lblBeinl, "cell 0 4,alignx center");
+		JLabel lblBeinr = new JLabel("Bein (R):");
+		panel_ruestung.add(lblBeinr, "cell 0 5,alignx center");
+		JLabel lblKleidung = new JLabel("Kleidung:");
+		panel_ruestung.add(lblKleidung, "cell 0 6,alignx center");
+		JLabel lblVerbrauchsgter = new JLabel("Verbrauchsg\u00FCter:");
+		panel_ruestung.add(lblVerbrauchsgter, "cell 0 7,alignx center");
+		JLabel lblWerkzeug = new JLabel("Werkzeuge:");
+		panel_ruestung.add(lblWerkzeug, "cell 0 8,alignx center");
+		JLabel lblBionik = new JLabel("Bionik:");
+		panel_ruestung.add(lblBionik, "cell 0 9,alignx center");
+		JLabel lblHilfsmittel = new JLabel("Implantate:");
+		panel_ruestung.add(lblHilfsmittel, "cell 0 10,alignx center");
+		
+	}
+	
+	public void createPanel_talent() {
+		
+		JPanel panel_talente = new JPanel();
+		contentPane.add(panel_talente, "cell 0 3,grow");
+		panel_talente.setLayout(new MigLayout("", "[grow][grow]", "[][][][][][][][][][][]"));
+		
+		JLabel lblNewLabel_4 = new JLabel("Nahkampfwaffen:");
+		panel_talente.add(lblNewLabel_4, "cell 0 0,alignx center");
+		tfNkw = new JTextField();
+		panel_talente.add(tfNkw, "cell 1 0,growx");
+		tfNkw.setColumns(10);
+		tFL_talente.add(tfNkw);
+		JLabel lblPistolen_1 = new JLabel("Pistolen:");
+		panel_talente.add(lblPistolen_1, "cell 0 1,alignx center");
+		tfPistolen = new JTextField();
+		tfPistolen.setColumns(10);
+		panel_talente.add(tfPistolen, "cell 1 1,growx");
+		tFL_talente.add(tfPistolen);
+		JLabel lblPistolen = new JLabel("Leichte Waffen:");
+		panel_talente.add(lblPistolen, "cell 0 2,alignx center");
+		tfLW = new JTextField();
+		tfLW.setColumns(10);
+		panel_talente.add(tfLW, "cell 1 2,growx");
+		tFL_talente.add(tfLW);
+		
+		for(int i=3; i<11; i++) {
+			for(int j=0; j<2; j++) {
+				JTextField tmp = new JTextField();
+				tmp.setColumns(10);
+				panel_talente.add(tmp, "cell "+j+" "+i+",growx");
+				tFL_talente.add(tmp);
+			}
+		}
+	}
+	
+	public void createPanel_ausbau() {
+		
+		JPanel panel_ausbau = new JPanel();
+		contentPane.add(panel_ausbau, "cell 2 1,grow");
+		panel_ausbau.setLayout(new MigLayout("", "[grow][][][]", "[][][][][][][][][][][][][][][][][][][][][][][]"));
+		
+		for(int i=1; i<23; i++) {
+			for(int j=1; j<4; j++) {
+				JCheckBox tmp = new JCheckBox("");
+				panel_ausbau.add(tmp, "cell "+j+" "+i);
+				cBL_ausbau.add(tmp);
+			}
+		}
+		
+		JLabel label_42 = new JLabel("BS");
+		label_42.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_ausbau.add(label_42, "cell 1 0,alignx center");
+		JLabel label_43 = new JLabel("+10");
+		label_43.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_ausbau.add(label_43, "cell 2 0,alignx center");
+		JLabel label_44 = new JLabel("+20");
+		label_44.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_ausbau.add(label_44, "cell 3 0,alignx center");
+		JLabel lblNewLabel_2 = new JLabel("Sprache (Niedergotisch)");
+		panel_ausbau.add(lblNewLabel_2, "cell 0 1");
+		JLabel lblSprachehochgotisch = new JLabel("Sprache (Hochgotisch)");
+		panel_ausbau.add(lblSprachehochgotisch, "cell 0 2");
+		
+		for(int i=3; i<23; i++) {
+			JTextField tmp = new JTextField();
+			panel_ausbau.add(tmp, "cell "+0+" "+i+",growx");
+			tmp.setColumns(10);
+			tFL_ausbau.add(tmp);
+		}
+		
+	}
+	
+	public void createPanel_grund() {
+
+		JPanel panel_grund = new JPanel();
+		contentPane.add(panel_grund, "cell 1 1,grow");
+		panel_grund.setLayout(new MigLayout("", "[grow][][][]", "[][][][][][][][][][][][][][][][][][][][][][][]"));
+		
+		for(int i=1; i<23; i++) {
+			for(int j=1; j<4; j++) {
+				JCheckBox tmp = new JCheckBox("");
+				panel_grund.add(tmp, "cell "+j+" "+i);
+				cBL_grund.add(tmp);
+			}
+		}
+		
+		JLabel lblBs = new JLabel("BS");
+		lblBs.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_grund.add(lblBs, "cell 1 0,alignx center");
+		JLabel label_40 = new JLabel("+10");
+		label_40.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_grund.add(label_40, "cell 2 0,alignx center");
+		JLabel label_41 = new JLabel("+20");
+		label_41.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_grund.add(label_41, "cell 3 0,alignx center");
+		JLabel lblNewLabel = new JLabel("Aufmerksamkeit (WA)");
+		panel_grund.add(lblNewLabel, "cell 0 1,alignx center");
+		JLabel lblAusweichenge = new JLabel("Ausweichen (GE)");
+		panel_grund.add(lblAusweichenge, "cell 0 2,alignx center");
+		JLabel lblBefehligench = new JLabel("Befehligen (CH)");
+		panel_grund.add(lblBefehligench, "cell 0 3,alignx center");
+		JLabel lblCharmech = new JLabel("Charme (CH)");
+		panel_grund.add(lblCharmech, "cell 0 4,alignx center");
+		JLabel lblEinschchternst = new JLabel("Einsch\u00FCchtern (ST)");
+		panel_grund.add(lblEinschchternst, "cell 0 5,alignx center");
+		JLabel lblFeilschench = new JLabel("Feilschen (CH)");
+		panel_grund.add(lblFeilschench, "cell 0 6,alignx center");
+		JLabel lblForschenderBlickwa = new JLabel("Forschender Blick (WA)");
+		panel_grund.add(lblForschenderBlickwa, "cell 0 7,alignx center");
+		JLabel lblGlcksspielin = new JLabel("Gl\u00FCcksspiel (IN)");
+		panel_grund.add(lblGlcksspielin, "cell 0 8,alignx center");
+		JLabel lblKletternst = new JLabel("Klettern (ST)");
+		panel_grund.add(lblKletternst, "cell 0 9,alignx center");
+		JLabel lblLogikin = new JLabel("Logik (IN)");
+		panel_grund.add(lblLogikin, "cell 0 10,alignx center");
+		JLabel lblNachforschench = new JLabel("Nachforschen (CH)");
+		panel_grund.add(lblNachforschench, "cell 0 11,alignx center");
+		JLabel lblSchtzenin = new JLabel("Sch\u00E4tzen (IN)");
+		panel_grund.add(lblSchtzenin, "cell 0 12,alignx center");
+		JLabel lblSchlagenmenschge = new JLabel("Schlagenmensch (GE)");
+		panel_grund.add(lblSchlagenmenschge, "cell 0 13,alignx center");
+		JLabel lblSchleichenge = new JLabel("Schleichen (GE)");
+		panel_grund.add(lblSchleichenge, "cell 0 14,alignx center");
+		JLabel lblSchwimmenst = new JLabel("Schwimmen (ST)");
+		panel_grund.add(lblSchwimmenst, "cell 0 15,alignx center");
+		JLabel lblSuchenwa = new JLabel("Suchen (WA)");
+		panel_grund.add(lblSuchenwa, "cell 0 16,alignx center");
+		JLabel lblTarnungge = new JLabel("Tarnung (GE)");
+		panel_grund.add(lblTarnungge, "cell 0 17,alignx center");
+		JLabel lblVerkleidench = new JLabel("Verkleiden (CH)");
+		panel_grund.add(lblVerkleidench, "cell 0 18,alignx center");
+		JLabel lblVorgaukelnch = new JLabel("Vorgaukeln (CH)");
+		panel_grund.add(lblVorgaukelnch, "cell 0 19,alignx center");
+		JLabel lblZechenwi = new JLabel("Zechen (WI)");
+		panel_grund.add(lblZechenwi, "cell 0 20,alignx center");
+		
+		tfG1 = new JTextField();
+		panel_grund.add(tfG1, "cell 0 21,growx");
+		tfG1.setColumns(10);
+		tFL_grund.add(tfG1);
+		tfG2 = new JTextField();
+		tfG2.setColumns(10);
+		panel_grund.add(tfG2, "cell 0 22,growx");
+		tFL_grund.add(tfG2);
+
+	}
+	
+	public void createPanel_charakter(){
+		
+		JPanel panel_charakter = new JPanel();
+		contentPane.add(panel_charakter, "cell 0 1,grow");
+		panel_charakter.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][][][][][][][][][][][][][][]"));
+		
+		tfName = new JTextField();
+		panel_charakter.add(tfName, "cell 1 0,growx");
+		tfName.setColumns(10);
+		tFL_character.add(tfName);
+		tfHeimatwelt = new JTextField();
+		tfHeimatwelt.setColumns(10);
+		panel_charakter.add(tfHeimatwelt, "flowx,cell 1 1");
+		tFL_character.add(tfHeimatwelt);
+		JLabel lblTradition = new JLabel("Tradition:");
+		panel_charakter.add(lblTradition, "cell 1 1");
+		tfTradition = new JTextField();
+		tfTradition.setColumns(10);
+		panel_charakter.add(tfTradition, "cell 1 1,growx");
+		tFL_character.add(tfTradition);
+		tfKarriere = new JTextField();
+		tfKarriere.setColumns(10);
+		panel_charakter.add(tfKarriere, "cell 1 2,growx");
+		tFL_character.add(tfKarriere);
+		tfRang = new JTextField();
+		tfRang.setColumns(10);
+		panel_charakter.add(tfRang, "cell 1 3,growx");
+		tFL_character.add(tfRang);
+		tfWeissagung = new JTextField();
+		tfWeissagung.setColumns(10);
+		panel_charakter.add(tfWeissagung, "cell 1 4,growx,aligny top");
+		tFL_character.add(tfWeissagung);
+		tfKennzeichen = new JTextField();
+		tfKennzeichen.setColumns(10);
+		panel_charakter.add(tfKennzeichen, "cell 1 5,growx");
+		tFL_character.add(tfKennzeichen);
+		tfGeschlecht = new JTextField();
+		tfGeschlecht.setColumns(10);
+		panel_charakter.add(tfGeschlecht, "flowx,cell 1 6");
+		tFL_character.add(tfGeschlecht);
+		JLabel label_15 = new JLabel("K\u00F6rperbau:");
+		panel_charakter.add(label_15, "cell 1 6");
+		tfKoerperbau = new JTextField();
+		tfKoerperbau.setColumns(10);
+		panel_charakter.add(tfKoerperbau, "cell 1 6,growx");
+		tFL_character.add(tfKoerperbau);
+		tfHautfarbe = new JTextField();
+		tfHautfarbe.setColumns(10);
+		panel_charakter.add(tfHautfarbe, "flowx,cell 1 8,growx");
+		tFL_character.add(tfHautfarbe);
+		JLabel label_14 = new JLabel("Haarfarbe:");
+		panel_charakter.add(label_14, "cell 1 8");
+		tfHaarfarbe = new JTextField();
+		tfHaarfarbe.setColumns(10);
+		panel_charakter.add(tfHaarfarbe, "cell 1 8");
+		tFL_character.add(tfHaarfarbe);
+		tfAugenfarbe = new JTextField();
+		tfAugenfarbe.setColumns(10);
+		panel_charakter.add(tfAugenfarbe, "flowx,cell 1 9,growx");
+		tFL_character.add(tfAugenfarbe);
+		JLabel lblHndigkeit = new JLabel("H\u00E4ndigkeit:");
+		panel_charakter.add(lblHndigkeit, "cell 1 9");
+		tfHaendigkeit = new JTextField();
+		tfHaendigkeit.setColumns(10);
+		panel_charakter.add(tfHaendigkeit, "cell 1 9");
+		tFL_character.add(tfHaendigkeit);
+		tfMutation = new JTextField();
+		tfMutation.setColumns(10);
+		panel_charakter.add(tfMutation, "cell 1 17,growx,aligny top");
+		tFL_character.add(tfMutation);
+		tfGeistesstoerung = new JTextField();
+		tfGeistesstoerung.setColumns(10);
+		panel_charakter.add(tfGeistesstoerung, "cell 1 18,growx");
+		tFL_character.add(tfGeistesstoerung);
+		tfMetastasen = new JTextField();
+		tfMetastasen.setColumns(10);
+		panel_charakter.add(tfMetastasen, "cell 1 19,growx");
+		tFL_character.add(tfMetastasen);
+		//G-G-A
+		JSpinner spinnerGroesse = new JSpinner();
+		spinnerGroesse.setModel(new SpinnerNumberModel(175, 155, 210, 1));
+		panel_charakter.add(spinnerGroesse, "flowx,cell 1 7");
+		sL_character.add(spinnerGroesse);
+			JLabel label_13 = new JLabel("Gewicht:");
+			panel_charakter.add(label_13, "cell 1 7");
+		JSpinner spinnerGewicht = new JSpinner();
+		spinnerGewicht.setModel(new SpinnerNumberModel(65, 45, 120, 1));
+		panel_charakter.add(spinnerGewicht, "cell 1 7");
+		sL_character.add(spinnerGewicht);
+			JLabel label_16 = new JLabel("Alter:");
+			panel_charakter.add(label_16, "cell 1 7");
+		JSpinner spinnerAlter = new JSpinner();
+		spinnerAlter.setModel(new SpinnerNumberModel(25, 16, 70, 1));
+		panel_charakter.add(spinnerAlter, "cell 1 7");
+		sL_character.add(spinnerAlter);
+		//Werte Zeile 1
+		JSpinner spinnerKG = new JSpinner();
+		spinnerKG.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+		panel_charakter.add(spinnerKG, "flowx,cell 1 11");
+		sL_character.add(spinnerKG);
+			JLabel lblBf_1 = new JLabel("BF:");
+			panel_charakter.add(lblBf_1, "cell 1 11");
+		JSpinner spinnerBF = new JSpinner();
+		spinnerBF.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+		panel_charakter.add(spinnerBF, "cell 1 11");
+		sL_character.add(spinnerBF);
+			JLabel lblSt_1 = new JLabel("ST:");
+			panel_charakter.add(lblSt_1, "cell 1 11");
+		JSpinner spinnerST = new JSpinner();
+		spinnerST.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+		panel_charakter.add(spinnerST, "cell 1 11");
+		sL_character.add(spinnerST);
+		//Werte Zeile 2
+		JSpinner spinnerWI = new JSpinner();
+		spinnerWI.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+		panel_charakter.add(spinnerWI, "flowx,cell 1 12");
+		sL_character.add(spinnerWI);
+			JLabel lblWi_1 = new JLabel("GE:");
+			panel_charakter.add(lblWi_1, "cell 1 12");
+		JSpinner spinnerGE = new JSpinner();
+		spinnerGE.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+			panel_charakter.add(spinnerGE, "cell 1 12");
+			sL_character.add(spinnerGE);
+			JLabel lblIn_2 = new JLabel("IN:");
+		panel_charakter.add(lblIn_2, "cell 1 12");
+		JSpinner spinnerIN = new JSpinner();
+		spinnerIN.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+		panel_charakter.add(spinnerIN, "cell 1 12");
+		sL_character.add(spinnerIN);
+		//Werte Zeile 3
+		JSpinner spinnerWA = new JSpinner();
+		spinnerWA.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+		panel_charakter.add(spinnerWA, "flowx,cell 1 13");
+		sL_character.add(spinnerWA);
+			JLabel lblIn_1 = new JLabel("WK:");
+			panel_charakter.add(lblIn_1, "cell 1 13");
+		JSpinner spinnerWK = new JSpinner();
+		spinnerWK.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+		panel_charakter.add(spinnerWK, "cell 1 13");
+		sL_character.add(spinnerWK);
+			JLabel label_1 = new JLabel("CH:");
+			panel_charakter.add(label_1, "cell 1 13");
+		JSpinner spinnerCH = new JSpinner();
+		spinnerCH.setModel(new SpinnerNumberModel(30, 0, 100, 1));
+		panel_charakter.add(spinnerCH, "cell 1 13");
+		sL_character.add(spinnerCH);
+		//Werte Zeile 4
+		JSpinner spinnerSP = new JSpinner();
+		spinnerSP.setModel(new SpinnerNumberModel(2, 0, 100, 1));
+		panel_charakter.add(spinnerSP, "flowx,cell 1 14");
+		sL_character.add(spinnerSP);
+			JLabel lblWk = new JLabel("WP:");
+			panel_charakter.add(lblWk, "cell 1 14");
+		JSpinner spinnerWP = new JSpinner();
+		spinnerWP.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		panel_charakter.add(spinnerWP, "cell 1 14");
+		sL_character.add(spinnerWP);
+			JLabel lblVp_1 = new JLabel("VP:");
+			panel_charakter.add(lblVp_1, "cell 1 14");
+		JSpinner spinnerVP = new JSpinner();
+		spinnerVP.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		panel_charakter.add(spinnerVP, "cell 1 14");
+		sL_character.add(spinnerVP);
+		//Werte Zeile 5
+		JSpinner spinnerLPm = new JSpinner();
+		spinnerLPm.setModel(new SpinnerNumberModel(10, 0, 100, 1));
+		panel_charakter.add(spinnerLPm, "flowx,cell 1 15");
+		sL_character.add(spinnerLPm);
+		JLabel lblSp = new JLabel("LP:");
+			panel_charakter.add(lblSp, "cell 1 15");
+			JSpinner spinnerLP = new JSpinner();
+		spinnerLP.setModel(new SpinnerNumberModel(10, 0, 100, 1));
+		panel_charakter.add(spinnerLP, "cell 1 15");
+		sL_character.add(spinnerLP);
+			JLabel lblKs = new JLabel("ES:");
+			panel_charakter.add(lblKs, "cell 1 15");
+		JSpinner spinnerES = new JSpinner();
+		spinnerES.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		panel_charakter.add(spinnerES, "cell 1 15");
+		sL_character.add(spinnerES);
+		//Geld
+		JSpinner spinnerVermoegen = new JSpinner();
+		spinnerVermoegen.setModel(new SpinnerNumberModel(0, -100000, 100000, 1));
+		spinnerVermoegen.setBackground(new Color(240, 240, 240));
+		panel_charakter.add(spinnerVermoegen, "flowx,cell 1 21");
+		sL_character.add(spinnerVermoegen);
+			JLabel lblEinkommen = new JLabel("Einkommen:");
+			panel_charakter.add(lblEinkommen, "cell 1 21,alignx center");
+		JSpinner spinnerEinkommen = new JSpinner();
+		spinnerEinkommen.setModel(new SpinnerNumberModel(0, 0, 10000, 1));
+		spinnerEinkommen.setBackground(SystemColor.menu);
+		panel_charakter.add(spinnerEinkommen, "cell 1 21");
+		sL_character.add(spinnerEinkommen);
+		//triviallabel
+		JLabel lblNewLabel_1 = new JLabel("Name:");
+		panel_charakter.add(lblNewLabel_1, "cell 0 0,alignx center");
+		JLabel lblHeimatwelt = new JLabel("Heimatwelt:");
+		panel_charakter.add(lblHeimatwelt, "cell 0 1,alignx center");
+		JLabel lblKarrierepfad = new JLabel("Karrierepfad:");
+		panel_charakter.add(lblKarrierepfad, "cell 0 2,alignx center");		
+		JLabel lblRang = new JLabel("Rang:");
+		panel_charakter.add(lblRang, "cell 0 3,alignx center");		
+		JLabel lblWeissagung = new JLabel("Weissagung:");
+		panel_charakter.add(lblWeissagung, "cell 0 4,alignx center");		
+		JLabel lblKennzeichen = new JLabel("Kennzeichen:");
+		panel_charakter.add(lblKennzeichen, "cell 0 5,alignx center");		
+		JLabel lblGeschlecht = new JLabel("Geschlecht:");
+		panel_charakter.add(lblGeschlecht, "cell 0 6,alignx center");		
+		JLabel lblGre = new JLabel("Gr\u00F6\u00DFe:");
+		panel_charakter.add(lblGre, "cell 0 7,alignx center");		
+		JLabel lblHautfarbe = new JLabel("Hautfarbe:");
+		panel_charakter.add(lblHautfarbe, "cell 0 8,alignx center");
+		JLabel lblAugenfarbe = new JLabel("Augenfarbe:");
+		panel_charakter.add(lblAugenfarbe, "cell 0 9,alignx center");
+		JLabel label_17 = new JLabel("");
+		panel_charakter.add(label_17, "flowx,cell 0 10");		
+		JLabel label_19 = new JLabel("________________________________________");
+		panel_charakter.add(label_19, "cell 1 10");		
+		JLabel lblNewLabel_3 = new JLabel("KG:");
+		panel_charakter.add(lblNewLabel_3, "cell 0 11,alignx trailing");		
+		JLabel lblBf = new JLabel("WI:");
+		panel_charakter.add(lblBf, "cell 0 12,alignx trailing");		
+		JLabel lblSt = new JLabel("WA:");
+		panel_charakter.add(lblSt, "cell 0 13,alignx trailing");		
+		JLabel lblWi = new JLabel("SP:");
+		panel_charakter.add(lblWi, "cell 0 14,alignx trailing");		
+		JLabel lblGe = new JLabel("LP (max):");
+		panel_charakter.add(lblGe, "cell 0 15,alignx trailing");		
+		JLabel label_18 = new JLabel("");
+		panel_charakter.add(label_18, "flowx,cell 0 16");		
+		JLabel label_20 = new JLabel("________________________________________");
+		panel_charakter.add(label_20, "cell 1 16");	
+		JLabel lblIn = new JLabel("Mutation:");
+		panel_charakter.add(lblIn, "cell 0 17,alignx center");	
+		JLabel label = new JLabel("Geistesst\u00F6rung:");
+		panel_charakter.add(label, "cell 0 18,alignx center");	
+		JLabel lblGeistesstrung = new JLabel("Metastasen:");
+		panel_charakter.add(lblGeistesstrung, "cell 0 19,alignx center");	
+		JLabel label_21 = new JLabel("________________________________________");
+		panel_charakter.add(label_21, "cell 1 20");	
+		JLabel lblVermgen = new JLabel("Verm\u00F6gen:");
+		panel_charakter.add(lblVermgen, "cell 0 21,alignx center");	
+		JLabel label_2 = new JLabel("");
+		panel_charakter.add(label_2, "cell 0 22");
+		//
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+		saveToDB();
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	private JTextField tfName;
+	private JTextField tfTradition;
+	private JTextField tfKarriere;
+	private JTextField tfRang;
+	private JTextField tfWeissagung;
+	private JTextField tfKennzeichen;
+	private JTextField tfKoerperbau;
+	private JTextField tfNkw;
+	private JTextField tfPistolen;
+	private JTextField tfLW;
+	private JTextField tfHautfarbe;
+	private JTextField tfAugenfarbe;
+	private JTextField tfG1;
+	private JTextField tfG2;
+	private JTextField tfMutation;
+	private JTextField tfGeistesstoerung;
+	private JTextField tfMetastasen;
+	private JTextField tfHaarfarbe;
+	private JTextField tfGeschlecht;
+	private JTextField tfHaendigkeit;
+	private JTextField tfHeimatwelt;
+
+}
