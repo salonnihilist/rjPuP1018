@@ -48,9 +48,7 @@ public class GUI extends JFrame implements WindowListener{
 					GUI frame = new GUI();
 					frame.setVisible(true);
 					
-					// if *name_is
-					
-					frame.setTitle("Dunkle Häresie - Charakterblatt"); // +"-*Name*"
+					frame.setTitle("Dunkle Häresie - Charakterblatt"); //to do: +"-*Name*"
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -93,8 +91,6 @@ public class GUI extends JFrame implements WindowListener{
 		createMisc();
 		
 		loadFromDB();
-		
-		
 	}
 	
 	public void saveToDB() { //@JULIAN!
@@ -117,13 +113,12 @@ public class GUI extends JFrame implements WindowListener{
 	
 	public void loadFromDB() { //@JULIAN!
 		
-		
 		/* 
 		 *  Hier ist der entsprechende Code für das Laden aus der Datenbank einzufügen! (Es folgt ein Beispiel...)
 		 * 
-		ArrayList<JTextField> tmp_tFL_character = db.get(tmp_tFL_character);
-		ArrayList<JTextField> tmp_tFL_ausbau = db.get(tmp_tFL_ausbau);
-		ArrayList<JTextField> tmp_tFL_grund = db.get(tmp_tFL_grund);
+		ArrayList<JTextField> tmp_tFL_character = db.get(tFL_character);
+		ArrayList<JTextField> tmp_tFL_ausbau = db.get(tFL_ausbau);
+		ArrayList<JTextField> tmp_tFL_grund = db.get(tFL_grund);
 		ArrayList<JCheckBox> tmp_cBL_grund = db.get(cBL_grund);
 		ArrayList<JCheckBox> tmp_cBL_ausbau = db.get(cBL_aubau);
 		ArrayList<JSpinner> tmp_sL_character = db.get(sL_character);
@@ -131,6 +126,37 @@ public class GUI extends JFrame implements WindowListener{
 		ArrayList<JTextField> tmp_tFL_ruestung = db.get(tFL_ruestung);
 		ArrayList<JTextField> tmp_tFL_waffen = db.get(tFL_waffen);
 		ArrayList<JSpinner> tmp_sL_waffen = db.get(sL_waffen);
+		
+		for(int i=0; i<tFL_character.size(); i++) {
+			tFL_character.get(i).setText(tmp_tFL_character.get(i).getText());
+		}
+		for(int i=0; i<tFL_ausbau.size(); i++) {
+			tFL_ausbau.get(i).setText(tmp_tFL_ausbau.get(i).getText());
+		}
+		for(int i=0; i<tFL_grund.size(); i++) {
+			tFL_grund.get(i).setText(tmp_tFL_grund.get(i).getText());
+		}
+		for(int i=0; i<cBL_grund.size(); i++) {
+			cBL_grund.get(i).setSelected(tmp_cBL_grund.get(i).isSelected());
+		}
+		for(int i=0; i<cBL_ausbau.size(); i++) {
+			cBL_ausbau.get(i).setSelected(tmp_cBL_ausbau.get(i).isSelected());
+		}
+		for(int i=0; i<sL_character.size(); i++) {
+			sL_character.get(i).setValue(tmp_sL_character.get(i).getValue());
+		}
+		for(int i=0; i<tFL_talente.size(); i++) {
+			tFL_talente.get(i).setText(tmp_tFL_talente.get(i).getText());
+		}
+		for(int i=0; i<tFL_ruestung.size(); i++) {
+			tFL_ruestung.get(i).setText(tmp_tFL_ruestung.get(i).getText());
+		}
+		for(int i=0; i<tFL_waffen.size(); i++) {
+			tFL_waffen.get(i).setText(tmp_tFL_waffen.get(i).getText());
+		}
+		for(int i=0; i<sL_waffen.size(); i++) {
+			sL_waffen.get(i).setValue(tmp_sL_waffen.get(i).getValue());
+		}
 		*/
 	}
 	
@@ -159,12 +185,10 @@ public class GUI extends JFrame implements WindowListener{
 		JLabel lblGrundfertigkeiten = new JLabel("GRUNDFERTIGKEITEN");
 		lblGrundfertigkeiten.setForeground(Color.WHITE);
 		contentPane.add(lblGrundfertigkeiten, "cell 1 0,alignx center");
-		
 	}
 	
 	public void createPanel_waffen() {
 		
-
 		JPanel panel_waffen = new JPanel();
 		contentPane.add(panel_waffen, "cell 2 3,grow");
 		panel_waffen.setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][][]"));
@@ -255,7 +279,6 @@ public class GUI extends JFrame implements WindowListener{
 		panel_ruestung.add(lblBionik, "cell 0 9,alignx center");
 		JLabel lblHilfsmittel = new JLabel("Implantate:");
 		panel_ruestung.add(lblHilfsmittel, "cell 0 10,alignx center");
-		
 	}
 	
 	public void createPanel_talent() {
@@ -327,7 +350,6 @@ public class GUI extends JFrame implements WindowListener{
 			tmp.setColumns(10);
 			tFL_ausbau.add(tmp);
 		}
-		
 	}
 	
 	public void createPanel_grund() {
@@ -402,7 +424,6 @@ public class GUI extends JFrame implements WindowListener{
 		tfG2.setColumns(10);
 		panel_grund.add(tfG2, "cell 0 22,growx");
 		tFL_grund.add(tfG2);
-
 	}
 	
 	public void createPanel_charakter(){
@@ -696,7 +717,6 @@ public class GUI extends JFrame implements WindowListener{
 		
 	}
 	
-	
 	private JTextField tfName;
 	private JTextField tfTradition;
 	private JTextField tfKarriere;
@@ -718,5 +738,4 @@ public class GUI extends JFrame implements WindowListener{
 	private JTextField tfGeschlecht;
 	private JTextField tfHaendigkeit;
 	private JTextField tfHeimatwelt;
-
 }
